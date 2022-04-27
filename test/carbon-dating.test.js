@@ -7,7 +7,7 @@ it.optional = testOptional;
 Object.freeze(expect);
 Object.freeze(assert);
 
-describe.only('Carbon dating', () => {
+describe('Carbon dating', () => {
   // Presence requirement
   describe('variable presence', () => {
     it.optional('function dateSample exists', () => {
