@@ -6,7 +6,7 @@ it.optional = testOptional;
 
 Object.freeze(assert);
 
-describe('Sum digits', () => {
+describe.only('Sum digits', () => {
   it.optional('should return the sum of digits', () => {
     assert.strictEqual(getSumOfDigits(91), 1);
     assert.strictEqual(getSumOfDigits(100), 1);
