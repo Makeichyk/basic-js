@@ -13,7 +13,7 @@ Object.freeze(assert);
 
 const { createSimpleArr, createSample } = getTestingTools();
 
-describe.only('Transform array', () => {
+describe('Transform array', () => {
     //Presence requirement
     describe('variable presence', () => {
         it.optional('function transform exists', () => {

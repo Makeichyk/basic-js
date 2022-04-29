@@ -45,23 +45,23 @@ function transform(arr) {
 				newArr.splice(newArr.indexOf('--double-prev'), 1);
 				return newArr;
 			}
-		}else if(newArr.includes('--discard-next')){
-      if(newArr.indexOf('--discard-next') !== newArr.length - 1 ){
-        newArr.splice(newArr.indexOf("--discard-next"), 2);  
-        return newArr
-        }else{
-          newArr.splice(newArr.indexOf('--discard-next'), 1,);
-          return newArr
-        }
-    }else if(newArr.includes('--discard-prev')){
-      if(newArr.indexOf('--discard-prev') !== 0){
-        newArr.splice(newArr.indexOf("--discard-prev") - 1,2);  
-        return newArr
-        }else{
-          newArr.splice(newArr.indexOf('--discard-prev'), 1,);
-          return newArr
-        }
-    }else return newArr;
+		} else if (newArr.includes('--discard-next')) {
+			if (newArr.indexOf('--discard-next') !== newArr.length - 1) {
+				newArr.splice(newArr.indexOf('--discard-next'), 2);
+				return newArr;
+			} else {
+				newArr.splice(newArr.indexOf('--discard-next'), 1);
+				return newArr;
+			}
+		} else if (newArr.includes('--discard-prev')) {
+			if (newArr.indexOf('--discard-prev') !== 0) {
+				newArr.splice(newArr.indexOf('--discard-prev') - 1, 2);
+				return newArr;
+			} else {
+				newArr.splice(newArr.indexOf('--discard-prev'), 1);
+				return newArr;
+			}
+		} else return newArr;
 	} else throw Error(message);
 }
 
