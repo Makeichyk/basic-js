@@ -11,58 +11,86 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  * transform([1, 2, 3, '--double-next', 4, 5]) => [1, 2, 3, 4, 4, 5]
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
-  --discard-prev
-  --discard-next
-  --double-next
-  --double-prev
  */
-function transform(arr) {
-	let message = "'arr' parameter must be an instance of the Array!";
-	if (Array.isArray(arr)) {
-		let newArr = [];
-		arr.map((item) => newArr.push(item));
-		if (newArr.includes('--double-next')) {
-			if (newArr.indexOf('--double-next') !== newArr.length - 1) {
-				newArr.splice(
-					newArr.indexOf('--double-next'),
-					1,
-					newArr[newArr.indexOf('--double-next') + 1]
-				);
-				return newArr;
-			} else {
-				newArr.splice(newArr.indexOf('--double-next'), 1);
-				return newArr;
-			}
-		} else if (newArr.includes('--double-prev')) {
-			if (newArr.indexOf('--double-prev') !== 0) {
-				newArr.splice(
-					newArr.indexOf('--double-prev'),
-					1,
-					newArr[newArr.indexOf('--double-prev') - 1]
-				);
-				return newArr;
-			} else {
-				newArr.splice(newArr.indexOf('--double-prev'), 1);
-				return newArr;
-			}
-		} else if (newArr.includes('--discard-next')) {
-			if (newArr.indexOf('--discard-next') !== newArr.length - 1) {
-				newArr.splice(newArr.indexOf('--discard-next'), 2);
-				return newArr;
-			} else {
-				newArr.splice(newArr.indexOf('--discard-next'), 1);
-				return newArr;
-			}
-		} else if (newArr.includes('--discard-prev')) {
-			if (newArr.indexOf('--discard-prev') !== 0) {
-				newArr.splice(newArr.indexOf('--discard-prev') - 1, 2);
-				return newArr;
-			} else {
-				newArr.splice(newArr.indexOf('--discard-prev'), 1);
-				return newArr;
-			}
-		} else return newArr;
-	} else throw Error(message);
+
+const EMPTY_ACTION = '--empty';
+const ACTIONS = {
+	'--discard-next': (prevIndex, actionIndex, nextIndex, arr) => {
+		arr[actionIndex] = EMPTY_ACTION;
+
+		if (!nextIndex) {
+			return;
+		}
+
+		arr[nextIndex] = EMPTY_ACTION;
+	},
+	'--discard-prev': (prevIndex, actionIndex, nextIndex, arr) => {
+		arr[actionIndex] = EMPTY_ACTION;
+
+		if (!prevIndex) {
+			return;
+		}
+
+		arr[prevIndex] = EMPTY_ACTION;
+	},
+	'--double-next': (prevIndex, actionIndex, nextIndex, arr) => {
+		arr[actionIndex] = EMPTY_ACTION;
+
+		if (!nextIndex) {
+			return;
+		}
+
+		if (arr[nextIndex] === EMPTY_ACTION) {
+			return;
+		}
+
+		arr[actionIndex] = arr[nextIndex];
+	},
+	'--double-prev': (prevIndex, actionIndex, nextIndex, arr) => {
+		arr[actionIndex] = EMPTY_ACTION;
+
+		if (!prevIndex) {
+			return;
+		}
+
+		if (arr[prevIndex] === EMPTY_ACTION) {
+			return;
+		}
+
+		arr[actionIndex] = arr[prevIndex];
+	},
+};
+
+function transform(array) {
+	const message = "'arr' parameter must be an instance of the Array!";
+	if (!Array.isArray(array)) {
+		throw Error(message);
+	}
+
+	const cloneArray = JSON.parse(JSON.stringify(array));
+
+	for (let index = 0; index < cloneArray.length; index++) {
+		const prevElementIndex = index > 0 ? index - 1 : undefined;
+		const currentElementIndex = index;
+		const currentElement = cloneArray[currentElementIndex];
+		const nextElementIndex =
+			index < cloneArray.length - 1 ? index + 1 : undefined;
+
+		const isAction = Object.keys(ACTIONS).includes(currentElement);
+
+		if (isAction) {
+			ACTIONS[currentElement](
+				prevElementIndex,
+				currentElementIndex,
+				nextElementIndex,
+				cloneArray
+			);
+
+			return transform(cloneArray);
+		}
+	}
+
+	return cloneArray.filter((item) => item !== EMPTY_ACTION);
 }
 
 module.exports = {
