@@ -20,14 +20,14 @@ const { NotImplementedError } = require('../extensions/index.js');
 function getMatrixElementsSum(matrix) {
 	let matrixSum = 0;
 
-	for (let matrixString = 0; matrixString < matrix.length; matrixString++) {
-		for (let matrixColumn = 0; matrixColumn < matrix[matrixString].length; matrixColumn++) {
-			if (matrixString === 0) {
-				matrixSum += +matrix[matrixString][matrixColumn];
+	for (let matrixRow = 0; matrixRow < matrix.length; matrixRow++) {
+		for (let matrixColumn = 0; matrixColumn < matrix[matrixRow].length; matrixColumn++) {
+			if (matrixRow === 0) {
+				matrixSum += +matrix[matrixRow][matrixColumn];
 			}
-			if (matrixString > 0) {
-				if (matrix[matrixString - 1][matrixColumn] !== 0) {
-					matrixSum += +matrix[matrixString][matrixColumn];
+			if (matrixRow > 0) {
+				if (matrix[matrixRow - 1][matrixColumn] !== 0) {
+					matrixSum += +matrix[matrixRow][matrixColumn];
 				}
 			}
 		}
