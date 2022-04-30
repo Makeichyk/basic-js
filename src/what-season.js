@@ -59,6 +59,7 @@ function getSeason(dateObj) {
   }
 
   const month = dateObj.getMonth();
+  
   if (month >= 0 && month <= 11) {
     if (WINTER.includes(month)) {
       return 'winter';
