@@ -52,9 +52,8 @@ class VigenereCipheringMachine {
 		key = key.toUpperCase();
 		let resultString = '';
 
-		let j = 0;
-		for (let i = 0; i < str.length; i++) {
-			const letterCode = str[i].charCodeAt();
+		for (let j = 0, index = 0; index < str.length; index++) {
+			const letterCode = str[index].charCodeAt();
 
 			if (letterCode >= 65 && letterCode <= 90) {
 				if (!key[j]) j = 0;
@@ -67,7 +66,7 @@ class VigenereCipheringMachine {
 						: letterCode + keyCode;
 				resultString += String.fromCharCode((coded % 26) + 65);
 			} else {
-				resultString += str[i];
+				resultString += str[index];
 			}
 		}
 		return !this.isReverse && this.direct
