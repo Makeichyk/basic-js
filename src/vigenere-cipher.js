@@ -50,28 +50,30 @@ class VigenereCipheringMachine {
 	CipheringMachine(str, key, cryptType) {
 		str = str.toUpperCase();
 		key = key.toUpperCase();
-		let resultString = '';
+		let result = '';
 
-		for (let j = 0, index = 0; index < str.length; index++) {
-			const letterCode = str[index].charCodeAt();
-
+		for (let j = 0, i = 0; i < str.length; i++) {
+			const letterCode = str[i].charCodeAt();
 			if (letterCode >= 65 && letterCode <= 90) {
-				if (!key[j]) j = 0;
+				if (j >= key.length) j = 0;
 				const keyCode = key[j].charCodeAt();
 				j++;
 
-				const coded =
-					cryptType === 'decrypt'
-						? letterCode - keyCode + 26
-						: letterCode + keyCode;
-				resultString += String.fromCharCode((coded % 26) + 65);
+				let coded;
+				if (cryptType === 'encrypt') {
+					coded = ((letterCode - 65 + (keyCode - 65)) % 26) + 65;
+				} else {
+					coded = ((letterCode - 65 - (keyCode - 65) + 26) % 26) + 65;
+				}
+				result += String.fromCharCode(coded);
 			} else {
-				resultString += str[index];
+				result += str[i];
 			}
 		}
-		return !this.isReverse && this.direct
-			? resultString.split('').reverse().join('')
-			: resultString;
+
+		return this.direction === 'reverse'
+			? result.split('').reverse().join('')
+			: result;
 	}
 }
 
