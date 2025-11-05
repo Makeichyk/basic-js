@@ -1,9 +1,9 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require('../lib');
 
 /**
  * Extract season from given date and expose the enemy scout!
  *
- * @param {Date | FakeDate} dateObj real or fake date
+ * @param {Date | FakeDate} date real or fake date
  * @returns {String} time of the year
  *
  * @example
@@ -11,13 +11,10 @@ const { NotImplementedError } = require('../extensions/index.js');
  * getSeason(new Date(2020, 02, 31)) => 'spring'
  *
  */
-// function getSeason(dateObj) {
-// 	const winter = [11, 0, 1];
-// 	const spring = [2, 3, 4];
-// 	const summer = [5, 6, 7];
-// 	const fall = [8, 9, 10];
-// 	
-// 	
+function getSeason(/* date */) {
+  // Remove line below and write your code here
+  throw new NotImplementedError('Not implemented');
+}
 
 // 	if (dateObj === undefined) {
 // 		return stringError;
