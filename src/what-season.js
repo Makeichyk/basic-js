@@ -11,9 +11,40 @@ const { NotImplementedError } = require('../lib');
  * getSeason(new Date(2020, 02, 31)) => 'spring'
  *
  */
-function getSeason(/* date */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+function getSeason(dateObj) {
+	const WINTER = [11, 0, 1];
+	const SPRING = [2, 3, 4];
+	const SUMMER = [5, 6, 7];
+	const FALL = [8, 9, 10];
+	const STRING_ERROR = 'Unable to determine the time of year!';
+	const ERROR_MESSAGE = 'Invalid date!';
+
+	if (dateObj === undefined) {
+		return STRING_ERROR;
+	}
+
+	try {
+		dateObj.getUTCDate();
+	} catch (error) {
+		throw Error(ERROR_MESSAGE);
+	}
+
+	const month = dateObj.getMonth();
+
+	if (month >= 0 && month <= 11) {
+		if (WINTER.includes(month)) {
+			return 'winter';
+		}
+		if (SPRING.includes(month)) {
+			return 'spring';
+		}
+		if (SUMMER.includes(month)) {
+			return 'summer';
+		}
+		if (FALL.includes(month)) {
+			return 'autumn';
+		}
+	}
 }
 
 // 	if (dateObj === undefined) {
@@ -37,40 +68,39 @@ function getSeason(/* date */) {
 // }
 
 function getSeason(dateObj) {
-  const WINTER = [11, 0, 1];
-  const SPRING = [2, 3, 4];
-  const SUMMER = [5, 6, 7];
-  const FALL = [8, 9, 10];
-  const STRING_ERROR = 'Unable to determine the time of year!';
-  const ERROR_MESSAGE = 'Invalid date!'
-  
+	const WINTER = [11, 0, 1];
+	const SPRING = [2, 3, 4];
+	const SUMMER = [5, 6, 7];
+	const FALL = [8, 9, 10];
+	const STRING_ERROR = 'Unable to determine the time of year!';
+	const ERROR_MESSAGE = 'Invalid date!';
 
-  if (dateObj === undefined) {
-    return STRING_ERROR;
-  }
+	if (dateObj === undefined) {
+		return STRING_ERROR;
+	}
 
-  try {
-    dateObj.getUTCDate();
-  } catch (error) {
-    throw Error(ERROR_MESSAGE);
-  }
+	try {
+		dateObj.getUTCDate();
+	} catch (error) {
+		throw Error(ERROR_MESSAGE);
+	}
 
-  const month = dateObj.getMonth();
-  
-  if (month >= 0 && month <= 11) {
-    if (WINTER.includes(month)) {
-      return 'winter';
-    }
-    if (SPRING.includes(month)) {
-      return 'spring';
-    }
-    if (SUMMER.includes(month)) {
-      return 'summer';
-    }
-    if (FALL.includes(month)) {
-      return 'autumn';
-    }
-  }
+	const month = dateObj.getMonth();
+
+	if (month >= 0 && month <= 11) {
+		if (WINTER.includes(month)) {
+			return 'winter';
+		}
+		if (SPRING.includes(month)) {
+			return 'spring';
+		}
+		if (SUMMER.includes(month)) {
+			return 'summer';
+		}
+		if (FALL.includes(month)) {
+			return 'autumn';
+		}
+	}
 }
 module.exports = {
 	getSeason,
